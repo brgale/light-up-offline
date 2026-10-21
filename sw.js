@@ -1,4 +1,4 @@
-const CACHE_NAME = 'light-up-shell-v5';
+const CACHE_NAME = 'light-up-shell-v6';
 const APP_ROOT = new URL('./', self.registration.scope);
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', event => {
@@ -11,7 +11,12 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
   if (request.mode === 'navigate') {
-    event.respondWith(caches.match(new URL('./index.html', APP_ROOT)).then(cached => cached || fetch(request)));
+    const appPage = new URL('./index.html', APP_ROOT);
+    event.respondWith(fetch(request).then(response => {
+      if (!response.ok) throw new Error('Network response was not successful');
+      const copy = response.clone();
+      return caches.open(CACHE_NAME).then(cache => cache.put(appPage, copy)).then(() => response);
+    }).catch(() => caches.match(appPage)));
     return;
   }
   event.respondWith(caches.match(request).then(cached => cached || fetch(request).then(response => {
