@@ -18,9 +18,59 @@
 .win-action{min-width:132px;padding:10px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#172127;font:inherit;font-weight:750;cursor:pointer;transition:transform .12s,filter .12s}
 .win-action:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .win-action:focus-visible,.win-close:focus-visible{outline:3px solid #fff;outline-offset:3px}
-</style></head><body><main class="wrap"><header class="top"><div class="brand">✦ <b>LIGHT UP</b></div><span class="offline">● OFFLINE READY</span></header><section class="hero"><div><div class="eyebrow">A logic puzzle</div><h1>Light Up</h1><p>Illuminate every open square. Keep bulbs from seeing each other.</p></div><div class="stats"><div class="stat"><small>Time</small><strong id="timer">00:00</strong></div><div class="stat"><small>Bulbs</small><strong id="bulb-count">0 / 0</strong></div></div></section><section class="panel"><div class="toolbar"><select id="size" aria-label="Board size"><option value="7">7 × 7</option><option value="10">10 × 10</option><option value="14">14 × 14</option></select><select id="difficulty" aria-label="Difficulty"><option>Easy</option><option>Normal</option><option>Hard</option></select><button class="primary" id="new">New puzzle</button><span class="spacer"></span><button id="undo">Undo</button><button id="check">Check</button></div><div class="zoom-row"><label for="zoom">Board zoom</label><input id="zoom" type="range" min="60" max="150" step="5" value="100"><output id="zoom-value">100%</output></div><div class="board-shell"><div id="board" class="board" role="grid" aria-label="Light Up puzzle"></div></div><div class="legend"><span><i class="dot lit"></i>Illuminated</span><span><i class="dot wall"></i>Numbered wall</span><span>Left drag: bulbs · Right drag: ×</span></div><div id="message" class="message" aria-live="polite"></div></section><details class="rules"><summary>How to play</summary><p><strong>Place bulbs</strong> so every white square is illuminated. A bulb shines along its row and column until a dark wall blocks it. <strong>Bulbs cannot shine on one another.</strong> A number on a wall tells you how many bulbs touch it edge-to-edge.</p><p>Click or drag across squares with either mouse button to cycle through bulb, ×, and clear. Use Check when you think you have solved it.</p></details><div class="foot">A self-contained game. No account, ads, or internet connection needed.</div></main><dialog id="win-dialog" class="win-dialog" aria-labelledby="win-title" aria-describedby="win-copy"><div class="win-card"><button class="win-close" id="win-dismiss" type="button" aria-label="Close">×</button><div class="win-badge" aria-hidden="true">✦</div><h2 id="win-title">All lit up!</h2><p id="win-copy">Good job. You solved the puzzle.</p><button class="win-action" id="win-continue" type="button">Continue</button></div></dialog>
+
+/* Mobile-first polish */
+:root{--accent:#8db4ff;--lit:#a9c6ff;--frame:#d7cba4;--panel:#24282e;--line:#3c4653;--muted:#b5bfcd}
+body{background:radial-gradient(ellipse at 50% -18%,#35465c 0,transparent 58%),#171b21;letter-spacing:.005em}
+.wrap{width:min(1000px,100%);padding-top:clamp(14px,3vw,28px)}
+.brand{letter-spacing:.07em}.offline{white-space:nowrap;background:#20312e}
+.hero h1{letter-spacing:-.045em}.hero p{max-width:34rem}
+.panel{border-radius:22px;border-color:#3c4653;background:linear-gradient(145deg,#292e35f2,#22262bf2);box-shadow:0 22px 60px #05080d80}
+.toolbar select,.toolbar button{min-height:42px;border-radius:12px;border-color:#4a5563;background:#303741;transition:transform .12s,border-color .12s,background .12s}
+.toolbar button:active{transform:translateY(1px)}
+.toolbar .primary{background:var(--accent);color:#101b2b;border-color:var(--accent)}
+.mode-group{display:flex;gap:5px;padding:4px;border:1px solid #465160;background:#1b2027;border-radius:14px}
+.mode-button{flex:1;min-width:66px;display:flex;align-items:center;justify-content:center;gap:6px}
+.toolbar .mode-button{min-height:38px;padding:7px 10px;border-color:transparent;background:transparent;color:#c3ccda;font-size:.9rem}
+.toolbar .mode-button[aria-pressed="true"]{background:#8db4ff;color:#101b2b;border-color:#b5d0ff;font-weight:800;box-shadow:0 2px 10px #8db4ff30}
+.mode-glyph{font-size:1.05rem;line-height:1}
+.zoom-row{margin-top:2px}.zoom-row input{accent-color:var(--accent)}
+.board-shell{width:100%;overflow:auto;overscroll-behavior-inline:contain;padding:12px 2px 14px;justify-content:center}
+.board{gap:3px;padding:4px;border:8px solid var(--frame);outline:1px solid #080a0d;border-radius:12px;background:#080a0d;box-shadow:0 12px 24px #0005}
+.cell{border-radius:4px;transition:background .12s,box-shadow .12s;touch-action:none}
+.white{background:#f3f4f0;color:#18202a}
+.white.lit{background:var(--lit)}
+.white.bulb{background:#8db4ff}
+.white.marked:before{font-size:1.2em;color:#c04e3c}
+.white.conflict{box-shadow:inset 0 0 0 3px #e35f52,0 0 0 1px #e35f52}
+.wall{background:#11151b}
+.wall.number{background:#11151b}
+.legend{gap:10px 16px;margin-top:14px}
+.legend .action-hint{flex-basis:100%;text-align:center;color:#d2d9e3}
+.rules{border-radius:16px;border-color:#3c4653;background:#20252c}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #d7e5ff;outline-offset:2px}
+@media(max-width:560px){
+ .wrap{padding:12px 8px 26px}
+ .top{margin-bottom:17px}
+ .hero{margin-top:12px}
+ .panel{padding:9px;border-radius:18px}
+ .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+ .toolbar select{width:100%}
+ .toolbar .primary{grid-column:1 / -1}
+ .toolbar .spacer{display:none}
+ .toolbar #undo,.toolbar #check{min-height:44px}
+ .mode-group{grid-column:1 / -1;order:3}
+ .zoom-row{gap:7px;font-size:.78rem}
+ .zoom-row input{flex:1;min-width:0;width:auto}
+ .board-shell{justify-content:flex-start;padding:10px 1px 12px}
+ .board{margin-inline:auto}
+ .cell{border-radius:3px}
+ .legend{font-size:.76rem;gap:8px 12px}
+ .stat{min-width:86px}
+}
+</style></head><body><main class="wrap"><header class="top"><div class="brand">✦ <b>LIGHT UP</b></div><span class="offline">● OFFLINE READY</span></header><section class="hero"><div><div class="eyebrow">A logic puzzle</div><h1>Light Up</h1><p>Illuminate every open square. Keep bulbs from seeing each other.</p></div><div class="stats"><div class="stat"><small>Time</small><strong id="timer">00:00</strong></div><div class="stat"><small>Bulbs</small><strong id="bulb-count">0 / 0</strong></div></div></section><section class="panel"><div class="toolbar"><select id="size" aria-label="Board size"><option value="7">7 × 7</option><option value="10">10 × 10</option><option value="14">14 × 14</option></select><select id="difficulty" aria-label="Difficulty"><option>Easy</option><option>Normal</option><option>Hard</option></select><div class="mode-group" role="group" aria-label="Cell action"><button class="mode-button" type="button" data-mode="bulb" aria-pressed="true"><span class="mode-glyph">✦</span> Bulb</button><button class="mode-button" type="button" data-mode="mark" aria-pressed="false"><span class="mode-glyph">×</span> Mark</button><button class="mode-button" type="button" data-mode="erase" aria-pressed="false"><span class="mode-glyph">⌫</span> Erase</button></div><button class="primary" id="new">New puzzle</button><span class="spacer"></span><button id="undo">Undo</button><button id="check">Check</button></div><div class="zoom-row"><label for="zoom">Board zoom</label><input id="zoom" type="range" min="60" max="150" step="5" value="100"><output id="zoom-value">100%</output></div><div class="board-shell"><div id="board" class="board" role="grid" aria-label="Light Up puzzle"></div></div><div class="legend"><span><i class="dot lit"></i>Illuminated</span><span><i class="dot wall"></i>Numbered wall</span><span class="action-hint">Choose Bulb, Mark, or Erase, then tap or drag across squares.</span></div><div id="message" class="message" aria-live="polite"></div></section><details class="rules"><summary>How to play</summary><p><strong>Place bulbs</strong> so every white square is illuminated. A bulb shines along its row and column until a dark wall blocks it. <strong>Bulbs cannot shine on one another.</strong> A number on a wall tells you how many bulbs touch it edge-to-edge.</p><p>Choose Bulb, Mark (×), or Erase above. Tap or drag to apply that action to one or more squares. Use Undo to reverse your last tap or drag, and Check when you think you have solved it.</p></details><div class="foot">A self-contained game. No account, ads, or internet connection needed.</div></main><dialog id="win-dialog" class="win-dialog" aria-labelledby="win-title" aria-describedby="win-copy"><div class="win-card"><button class="win-close" id="win-dismiss" type="button" aria-label="Close">×</button><div class="win-badge" aria-hidden="true">✦</div><h2 id="win-title">All lit up!</h2><p id="win-copy">Good job. You solved the puzzle.</p><button class="win-action" id="win-continue" type="button">Continue</button></div></dialog>
 <script>
-(()=>{const $=s=>document.querySelector(s), boardEl=$('#board'), sizeEl=$('#size'),diffEl=$('#difficulty');let n=7,grid=[],state=[],history=[],seconds=0,tick=null,pressTimer=null,suppressClick=false,zoom=100,completed=false;const dirs=[[1,0],[-1,0],[0,1],[0,-1]];$('#win-dismiss').addEventListener('click',()=>$('#win-dialog').close());$('#win-continue').addEventListener('click',()=>$('#win-dialog').close());
+(()=>{const $=s=>document.querySelector(s), boardEl=$('#board'), sizeEl=$('#size'),diffEl=$('#difficulty');let n=7,grid=[],state=[],history=[],seconds=0,tick=null,zoom=100,completed=false,activeMode='bulb';const dirs=[[1,0],[-1,0],[0,1],[0,-1]];document.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{activeMode=button.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));$('#win-dismiss').addEventListener('click',()=>$('#win-dialog').close());$('#win-continue').addEventListener('click',()=>$('#win-dialog').close());
 // Count Akari solutions (up to two) with constraint propagation and backtracking.
 // Constraints model numbered walls, at most one bulb per visible line segment,
 // and at least one bulb in the row/column segments that light each white cell.
@@ -73,20 +123,21 @@ function makePuzzle(){completed=false;n=+sizeEl.value;const level=diffEl.value,w
 function illuminated(){const lit=Array.from({length:n},()=>Array(n).fill(false));for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(state[r][c]===1){lit[r][c]=true;for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){lit[rr][cc]=true;rr+=dr;cc+=dc}}}return lit}
 function conflict(r,c){for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){if(state[rr][cc]===1)return true;rr+=dr;cc+=dc}}return false}
 function render(){const lit=illuminated();boardEl.style.gridTemplateColumns=`repeat(${n},auto)`;applyZoom();boardEl.replaceChildren();let bulbs=0,total=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++){const v=grid[r][c],el=document.createElement('div');el.className='cell';el.dataset.r=r;el.dataset.c=c;el.setAttribute('role','gridcell');if(v>=0){el.classList.add('wall');if(v>0){el.classList.add('number');el.textContent=v-1;let adj=0,available=0;for(const[dr,dc]of dirs){const rr=r+dr,cc=c+dc;if(grid[rr]?.[cc]===-1){if(state[rr][cc]===1)adj++;else if(state[rr][cc]===0&&!lit[rr][cc])available++}}const target=v-1;el.classList.add(adj===target?'satisfied':'unsatisfied');if(adj>target||adj+available<target)el.classList.add('incorrect')}}else{total++;el.classList.add('white');if(lit[r][c])el.classList.add('lit');if(state[r][c]===1){bulbs++;el.classList.add('bulb');if(conflict(r,c))el.classList.add('conflict')}else if(state[r][c]===2)el.classList.add('marked');}boardEl.append(el)}$('#bulb-count').textContent=`${bulbs} / ${total}`;updateTimer()}
-function toggle(r,c,mark){history.push(state.map(row=>row.slice()));if(mark)state[r][c]=state[r][c]===2?0:2;else state[r][c]=state[r][c]===1?0:1;$('#message').textContent='';render()}
-let paint=null;
 function cellAtPoint(x,y){const el=document.elementFromPoint(x,y);return el?.closest('.cell.white')&&boardEl.contains(el)?el:null}
-function paintCell(el){if(!paint||!el)return;const key=el.dataset.r+','+el.dataset.c;if(paint.visited.has(key))return;paint.visited.add(key);const r=+el.dataset.r,c=+el.dataset.c;state[r][c]=(state[r][c]+1)%3;paint.changed=true;$('#message').textContent='';render()}
+function targetState(){return activeMode==='bulb'?1:activeMode==='mark'?2:0}
 function beginPaint(el,pointerId,mouseFallback=false){if(!el)return;const r=+el.dataset.r,c=+el.dataset.c;history.push(state.map(row=>row.slice()));paint={pointerId,startKey:r+','+c,startR:r,startC:c,visited:new Set(),changed:false,moved:false,mouseFallback}}
+let paint=null;
+function paintCell(el){if(!paint||!el)return;const key=el.dataset.r+','+el.dataset.c;if(paint.visited.has(key))return;paint.visited.add(key);const r=+el.dataset.r,c=+el.dataset.c,next=targetState();if(state[r][c]===next)return;state[r][c]=next;paint.changed=true;$('#message').textContent='';render()}
 function movePaint(x,y){if(!paint)return;const el=cellAtPoint(x,y);if(!el)return;const key=el.dataset.r+','+el.dataset.c;if(key===paint.startKey)return;paint.moved=true;paintCell(boardEl.querySelector('[data-r="'+paint.startR+'"][data-c="'+paint.startC+'"]'));paintCell(el)}
 boardEl.addEventListener('pointerdown',e=>{if(paint)return;const el=cellAtPoint(e.clientX,e.clientY);if(!el)return;e.preventDefault();beginPaint(el,e.pointerId);boardEl.setPointerCapture(e.pointerId)});
 boardEl.addEventListener('mousedown',e=>{if(paint)return;const el=cellAtPoint(e.clientX,e.clientY);if(!el)return;e.preventDefault();beginPaint(el,null,true)});
 boardEl.addEventListener('pointermove',e=>{if(paint&&!paint.mouseFallback&&paint.pointerId===e.pointerId)movePaint(e.clientX,e.clientY)});
 window.addEventListener('mousemove',e=>{if(paint?.mouseFallback)movePaint(e.clientX,e.clientY)});
-function finishPaint(){if(!paint)return;if(!paint.moved){const r=paint.startR,c=paint.startC;state[r][c]=(state[r][c]+1)%3;$('#message').textContent='';render()}else if(!paint.changed)history.pop();paint=null;check()}
+function isSolved(){const lit=illuminated();for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]===-1&&(!lit[r][c]||(state[r][c]===1&&conflict(r,c))))return false;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]>0){let adj=dirs.reduce((sum,[dr,dc])=>sum+((state[r+dr]?.[c+dc]===1)?1:0),0);if(adj!==grid[r][c]-1)return false}return true}
+function finishPaint(){if(!paint)return;const current=paint;if(!current.moved)paintCell(boardEl.querySelector('[data-r="'+current.startR+'"][data-c="'+current.startC+'"]'));paint=null;if(!current.changed)history.pop();if(isSolved())check();else $('#message').textContent=''}
 function endPaint(e){if(paint&&!paint.mouseFallback&&paint.pointerId===e.pointerId)finishPaint()}
 boardEl.addEventListener('pointerup',endPaint);boardEl.addEventListener('pointercancel',endPaint);window.addEventListener('mouseup',()=>{if(paint?.mouseFallback)finishPaint()});boardEl.addEventListener('contextmenu',e=>e.preventDefault());
-function applyZoom(){const max=window.innerWidth<560?48:62,available=Math.max(20,window.innerWidth-80),px=Math.max(20,Math.min(72,Math.min(max,available/n)*zoom/100));boardEl.style.setProperty('--cell-size',`${px}px`);$('#zoom-value').textContent=`${zoom}%`}
+function applyZoom(){const shell=boardEl.parentElement;const available=Math.max(1,shell.clientWidth-28),gap=3* (n-1)+8*2+12;const fit=(available-gap)/n;const max=window.innerWidth<560?48:62;const px=Math.max(16,Math.min(72,Math.min(max,fit)*zoom/100));boardEl.style.setProperty('--cell-size',px+'px');$('#zoom-value').textContent=zoom+'%'}
 function updateTimer(){$('#timer').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`}
 function check(){const lit=illuminated();let conflictFound=false,all=true;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]===-1){if(!lit[r][c])all=false;if(state[r][c]===1&&conflict(r,c))conflictFound=true}let clues=true;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]>0){let adj=dirs.reduce((s,[dr,dc])=>s+((state[r+dr]?.[c+dc]===1)?1:0),0);if(adj!==grid[r][c]-1)clues=false}if(all&&!conflictFound&&clues){$('#message').textContent='All lit up! Good job!';clearInterval(tick);if(!completed){completed=true;$('#win-dialog').showModal()}}else if(conflictFound)$('#message').textContent='Two bulbs can see each other. Move one and try again.';else if(!all)$('#message').textContent='Some squares are still dark.';else $('#message').textContent='Check the numbered walls: each needs the right number of bulbs.'}
 $('#new').onclick=makePuzzle;$('#zoom').oninput=e=>{zoom=+e.target.value;applyZoom()};window.addEventListener('resize',applyZoom);$('#size').onchange=makePuzzle;$('#difficulty').onchange=makePuzzle;$('#check').onclick=check;$('#undo').onclick=()=>{if(history.length){state=history.pop();$('#message').textContent='';render()}};makePuzzle()})();
