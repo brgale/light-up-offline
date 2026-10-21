@@ -2,25 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#1c1e20"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Light Up"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><title>Light Up — Offline</title>
+<meta name="theme-color" content="#f6f3ec"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Light Up"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><title>Light Up — Offline</title>
 <style>
-:root{color-scheme:dark;--bg:#1c1e20;--panel:#27292c;--ink:#f4f4f2;--muted:#b8bbc0;--accent:#85a3e0;--tile:#fffef0;--lit:#85a3e0;--wall:#000;--line:#45484d;--frame:#f8ecc2}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#343638 0,transparent 55%),var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}.wrap{width:min(960px,100%);padding:24px 18px 50px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.brand{font-weight:800;font-size:1.25rem;letter-spacing:.03em}.brand b{color:var(--accent)}.offline{font-size:.78rem;color:#c9e0d8;border:1px solid #54716f;padding:5px 10px;border-radius:30px}.hero{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:18px 0 14px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.72rem;font-weight:750}.hero h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.05;margin:6px 0}.hero p{color:var(--muted);margin:8px 0 0}.stats{display:flex;gap:8px}.stat{background:#232527;border:1px solid var(--line);padding:7px 12px;border-radius:10px;text-align:center;min-width:75px}.stat small{display:block;color:var(--muted);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase}.stat strong{font-variant-numeric:tabular-nums}.panel{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 18px 50px #07131670}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}.toolbar select,.toolbar button{font:inherit;color:var(--ink);background:#333639;border:1px solid #55595e;border-radius:9px;padding:9px 12px;cursor:pointer}.toolbar button:hover,.toolbar select:hover{border-color:var(--accent)}.toolbar .primary{background:var(--accent);color:#1e2c2b;border-color:var(--accent);font-weight:750}.toolbar .spacer{flex:1}.zoom-row{display:flex;align-items:center;gap:10px;margin:-3px 2px 10px;color:var(--muted);font-size:.82rem}.zoom-row input{width:min(240px,50vw);accent-color:var(--accent)}.zoom-row output{min-width:42px;font-variant-numeric:tabular-nums;color:var(--ink)}.board-shell{overflow:auto;display:flex;justify-content:center;padding:10px 0}.board{display:grid;gap:2px;padding:3px;border:12px solid var(--frame);outline:2px solid #080808;outline-offset:1px;border-radius:0;background:#000;touch-action:none;user-select:none}.cell{width:var(--cell-size,clamp(31px,7.4vw,62px));aspect-ratio:1;border-radius:0;display:grid;place-items:center;position:relative;font-weight:800;font-size:clamp(15px,3.3vw,23px);cursor:pointer;transition:background .12s,transform .08s}.cell:active{transform:scale(.96)}.white{background:var(--tile);color:#101010}.white.lit{background:var(--lit)}.white.bulb{background:var(--lit);color:#101317}.white.bulb:before{content:'';width:68%;height:68%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4.4 12.45c.9.76 1.4 1.6 1.55 2.55h5.7c.15-.95.65-1.79 1.55-2.55A7 7 0 0 0 12 2Z' fill='%23fff' stroke='%23111' stroke-width='1.8'/%3E%3Cpath d='M9.3 19h5.4M10.2 21.5h3.6' fill='none' stroke='%23111' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}.white.marked:before{content:'×';font-size:1.1em;color:#f08b77}.white.conflict{box-shadow:inset 0 0 0 3px #d56754}.wall{background:var(--wall);color:#fff;cursor:default}.wall.number{background:#000}.wall.satisfied{color:#9b9da0}.wall.unsatisfied{color:#fff}.wall.number.incorrect{color:#f08b77}.legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:12px 0 2px}.dot{display:inline-block;width:11px;height:11px;border-radius:2px;background:var(--tile);vertical-align:-1px;margin-right:5px}.dot.lit{background:var(--lit)}.dot.wall{background:#000}.message{min-height:26px;text-align:center;color:var(--accent);font-weight:650;margin-top:10px}.rules{margin-top:16px;background:#232527;border:1px solid var(--line);border-radius:14px;padding:14px 17px;color:var(--muted);font-size:.9rem}.rules strong{color:var(--ink)}.rules summary{cursor:pointer;color:var(--ink);font-weight:700}.rules p{margin:9px 0 2px}.foot{text-align:center;color:#80999a;font-size:.75rem;margin-top:18px}@media(max-width:560px){.wrap{padding:15px 10px 32px}.hero{display:block}.stats{margin-top:14px}.panel{padding:10px}.toolbar{gap:6px}.toolbar button,.toolbar select{padding:8px 9px;font-size:.87rem}.cell{gap:2px;width:var(--cell-size);border-radius:0}.toolbar .spacer{display:none}}
 
+:root{color-scheme:light;--bg:#f6f3ec;--ink:#182333;--muted:#657184;--accent:#315ee8;--accent-2:#f5b941;--tile:#fffdf7;--lit:#ffe08a;--wall:#202a3b;--line:#d9deea;--frame:#e9e1d0;--panel:#fffefa}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 80% 0%,#e4eaff 0,transparent 32rem),var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.01em}
+button,select,input{font:inherit}
+.wrap{width:min(1080px,100%);padding:22px 22px 48px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:42px}
+.brand{font-weight:900;font-size:1.02rem;letter-spacing:.13em;color:var(--ink)}
+.brand b{color:var(--accent)}
+.offline{display:inline-flex;align-items:center;gap:7px;font-size:.75rem;font-weight:750;letter-spacing:.045em;color:#22634e;border:1px solid #b9dccb;background:#e7f5ed;padding:6px 11px;border-radius:30px;white-space:nowrap}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:0 0 24px}
+.eyebrow{text-transform:uppercase;letter-spacing:.17em;color:var(--accent);font-size:.72rem;font-weight:850}
+.hero h1{font-size:clamp(2.5rem,6vw,4.3rem);letter-spacing:-.075em;line-height:.98;margin:8px 0 12px;font-weight:900}
+.hero p{color:var(--muted);font-size:1.05rem;margin:0;max-width:34rem}
+.stats{display:flex;gap:10px;flex-shrink:0}
+.stat{background:#fffefa;border:1px solid var(--line);padding:10px 16px;border-radius:15px;text-align:left;min-width:96px;box-shadow:0 3px 12px #20305008}
+.stat small{display:block;color:var(--muted);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+.stat strong{display:block;font-size:1.18rem;font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.panel{background:var(--panel);border:1px solid #e2e5ec;border-radius:26px;padding:20px;box-shadow:0 20px 60px #27395b12}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:16px}
+.toolbar select,.toolbar button{min-height:44px;font:inherit;color:var(--ink);background:#f6f7fb;border:1px solid #dce1eb;border-radius:12px;padding:9px 13px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s,box-shadow .15s}
+.toolbar select:hover,.toolbar button:hover{border-color:#9aaeea;background:#f0f3ff}
+.toolbar button:active{transform:translateY(1px)}
+.toolbar .primary{background:var(--accent);color:white;border-color:var(--accent);font-weight:800;padding-inline:18px;box-shadow:0 5px 12px #315ee82b}
+.toolbar .primary:hover{background:#254fd2;border-color:#254fd2}
+.toolbar .spacer{flex:1}
+.mode-group{display:flex;gap:4px;padding:4px;border:1px solid #e0e4ed;background:#f1f3f8;border-radius:15px}
+.toolbar .mode-button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:7px 12px;border:1px solid transparent;border-radius:10px;background:transparent;color:#5a6679;font-size:.9rem;font-weight:700}
+.toolbar .mode-button[aria-pressed="true"]{background:#fff;color:var(--accent);border-color:#d6dfff;box-shadow:0 2px 7px #23365b12}
+.mode-glyph{font-size:1.08rem;line-height:1}
+.zoom-row{display:flex;align-items:center;gap:11px;margin:0 2px 8px;color:var(--muted);font-size:.82rem;font-weight:700}
+.zoom-row input{width:min(240px,50vw);accent-color:var(--accent)}
+.zoom-row output{min-width:42px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.board-shell{width:100%;overflow:auto;display:flex;justify-content:center;overscroll-behavior-inline:contain;padding:14px 2px 16px}
+.board{display:grid;gap:3px;padding:7px;border:7px solid var(--frame);outline:1px solid #d2c9b5;outline-offset:1px;border-radius:16px;background:var(--wall);box-shadow:0 10px 24px #1c2b4317;touch-action:none;user-select:none}
+.cell{width:var(--cell-size,clamp(31px,7.4vw,62px));aspect-ratio:1;border-radius:5px;display:grid;place-items:center;position:relative;font-weight:850;font-size:clamp(15px,3.3vw,23px);cursor:pointer;transition:background .12s,box-shadow .12s;touch-action:none}
+.cell:active{filter:brightness(.96)}
+.white{background:var(--tile);color:#182333}
+.white.lit{background:var(--lit)}
+.white.bulb{background:#ffd45f;color:#182333}
+.white.bulb:before{content:'';width:68%;height:68%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4.4 12.45c.9.76 1.4 1.6 1.55 2.55h5.7c.15-.95.65-1.79 1.55-2.55A7 7 0 0 0 12 2Z' fill='%23fff' stroke='%23111' stroke-width='1.8'/%3E%3Cpath d='M9.3 19h5.4M10.2 21.5h3.6' fill='none' stroke='%23111' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.white.marked:before{content:'×';font-size:1.15em;color:#d34f40}
+.white.conflict{box-shadow:inset 0 0 0 3px #e34f42,0 0 0 1px #e34f42}
+.wall{background:var(--wall);color:#fff;cursor:default}
+.wall.number{background:var(--wall)}
+.wall.satisfied{color:#9ee0b7}
+.wall.unsatisfied{color:#fff}
+.wall.number.incorrect{color:#ff9a8d}
+.legend{display:flex;justify-content:center;gap:10px 18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:12px 0 0}
+.dot{display:inline-block;width:11px;height:11px;border-radius:3px;background:var(--tile);vertical-align:-1px;margin-right:6px;border:1px solid #d4d8df}
+.dot.lit{background:var(--lit);border-color:#e6c66d}
+.dot.wall{background:var(--wall);border-color:var(--wall)}
+.legend .action-hint{flex-basis:100%;text-align:center;color:#778297;font-size:.78rem;margin-top:2px}
+.message{min-height:26px;text-align:center;color:var(--accent);font-weight:750;margin-top:8px}
+.rules{margin-top:18px;background:#fffefa;border:1px solid #e2e5ec;border-radius:17px;padding:15px 18px;color:var(--muted);font-size:.9rem}
+.rules strong{color:var(--ink)}
+.rules summary{cursor:pointer;color:var(--ink);font-weight:800}
+.rules p{margin:9px 0 2px}
+.foot{text-align:center;color:#8a94a4;font-size:.75rem;margin-top:22px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #a9bcff;outline-offset:3px}
 .win-dialog{width:min(420px,calc(100vw - 32px));max-width:none;padding:0;border:0;background:transparent;color:var(--ink);overflow:visible}
-.win-dialog::backdrop{background:rgba(5,7,8,.78);backdrop-filter:blur(5px)}
-.win-card{position:relative;overflow:hidden;text-align:center;padding:38px 30px 28px;border:2px solid var(--frame);border-radius:20px;background:linear-gradient(155deg,#303337,#202224);box-shadow:0 24px 80px #000a}
-.win-card:before{content:'';position:absolute;width:230px;height:180px;left:50%;top:-125px;transform:translateX(-50%);background:radial-gradient(ellipse,#85a3e055,transparent 70%);pointer-events:none}
-.win-close{position:absolute;right:12px;top:12px;width:34px;height:34px;border:1px solid #55595e;border-radius:50%;background:#282a2d;color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer}
-.win-close:hover{color:#fff;border-color:var(--accent)}
-.win-badge{position:relative;display:grid;place-items:center;width:58px;height:58px;margin:0 auto 14px;border-radius:18px;background:var(--accent);color:#182126;font-size:2rem;box-shadow:0 0 30px #85a3e044}
-.win-card h2{position:relative;margin:0;color:#fffef0;font-size:clamp(1.7rem,6vw,2.2rem);line-height:1.1}
+.win-dialog::backdrop{background:rgba(16,24,38,.55);backdrop-filter:blur(5px)}
+.win-card{position:relative;overflow:hidden;text-align:center;padding:38px 30px 28px;border:2px solid #f0cf72;border-radius:24px;background:linear-gradient(155deg,#fffefa,#f3f6ff);box-shadow:0 24px 80px #11182733}
+.win-card:before{content:'';position:absolute;width:230px;height:180px;left:50%;top:-125px;transform:translateX(-50%);background:radial-gradient(ellipse,#8da9ff66,transparent 70%);pointer-events:none}
+.win-close{position:absolute;right:12px;top:12px;width:34px;height:34px;border:1px solid #dce1eb;border-radius:50%;background:#fff;color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer}
+.win-close:hover{color:var(--ink);border-color:var(--accent)}
+.win-badge{position:relative;display:grid;place-items:center;width:58px;height:58px;margin:0 auto 14px;border-radius:18px;background:var(--accent);color:white;font-size:2rem;box-shadow:0 0 30px #315ee82c}
+.win-card h2{position:relative;margin:0;color:var(--ink);font-size:clamp(1.7rem,6vw,2.2rem);line-height:1.1}
 .win-card p{margin:10px 0 23px;color:var(--muted);font-size:1rem}
-.win-action{min-width:132px;padding:10px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#172127;font:inherit;font-weight:750;cursor:pointer;transition:transform .12s,filter .12s}
+.win-action{min-width:132px;padding:11px 20px;border:1px solid var(--accent);border-radius:12px;background:var(--accent);color:white;font:inherit;font-weight:800;cursor:pointer;transition:transform .12s,filter .12s}
 .win-action:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.win-action:focus-visible,.win-close:focus-visible{outline:3px solid #fff;outline-offset:3px}
-</style></head><body><main class="wrap"><header class="top"><div class="brand">✦ <b>LIGHT UP</b></div><span class="offline">● OFFLINE READY</span></header><section class="hero"><div><div class="eyebrow">A logic puzzle</div><h1>Light Up</h1><p>Illuminate every open square. Keep bulbs from seeing each other.</p></div><div class="stats"><div class="stat"><small>Time</small><strong id="timer">00:00</strong></div><div class="stat"><small>Bulbs</small><strong id="bulb-count">0 / 0</strong></div></div></section><section class="panel"><div class="toolbar"><select id="size" aria-label="Board size"><option value="7">7 × 7</option><option value="10">10 × 10</option><option value="14">14 × 14</option></select><select id="difficulty" aria-label="Difficulty"><option>Easy</option><option>Normal</option><option>Hard</option></select><button class="primary" id="new">New puzzle</button><span class="spacer"></span><button id="undo">Undo</button><button id="check">Check</button></div><div class="zoom-row"><label for="zoom">Board zoom</label><input id="zoom" type="range" min="60" max="150" step="5" value="100"><output id="zoom-value">100%</output></div><div class="board-shell"><div id="board" class="board" role="grid" aria-label="Light Up puzzle"></div></div><div class="legend"><span><i class="dot lit"></i>Illuminated</span><span><i class="dot wall"></i>Numbered wall</span><span>Left drag: bulbs · Right drag: ×</span></div><div id="message" class="message" aria-live="polite"></div></section><details class="rules"><summary>How to play</summary><p><strong>Place bulbs</strong> so every white square is illuminated. A bulb shines along its row and column until a dark wall blocks it. <strong>Bulbs cannot shine on one another.</strong> A number on a wall tells you how many bulbs touch it edge-to-edge.</p><p>Click or drag across squares with either mouse button to cycle through bulb, ×, and clear. Use Check when you think you have solved it.</p></details><div class="foot">A self-contained game. No account, ads, or internet connection needed.</div></main><dialog id="win-dialog" class="win-dialog" aria-labelledby="win-title" aria-describedby="win-copy"><div class="win-card"><button class="win-close" id="win-dismiss" type="button" aria-label="Close">×</button><div class="win-badge" aria-hidden="true">✦</div><h2 id="win-title">All lit up!</h2><p id="win-copy">Good job. You solved the puzzle.</p><button class="win-action" id="win-continue" type="button">Continue</button></div></dialog>
+.win-action:focus-visible,.win-close:focus-visible{outline:3px solid #9fb5ff;outline-offset:3px}
+@media(max-width:700px){
+ .wrap{padding:14px 10px 30px}
+ .top{margin-bottom:28px}
+ .hero{display:block;margin-bottom:20px}
+ .hero h1{font-size:clamp(2.8rem,13vw,4rem)}
+ .hero p{font-size:.98rem;max-width:27rem}
+ .stats{margin-top:18px}
+ .stat{min-width:0;flex:1;padding:9px 13px}
+ .panel{padding:12px;border-radius:22px}
+ .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+ .toolbar select{width:100%;min-width:0}
+ .mode-group{grid-column:1 / -1;order:3}
+ .toolbar .mode-button{flex:1;min-height:42px}
+ .toolbar .primary{grid-column:1 / -1;grid-row:3;min-height:48px}
+ .toolbar .spacer{display:none}
+ .toolbar #undo,.toolbar #check{min-height:44px}
+ .zoom-row{gap:8px;font-size:.78rem}
+ .zoom-row input{flex:1;min-width:0;width:auto}
+ .board-shell{justify-content:flex-start;padding:10px 0 14px}
+ .board{margin-inline:auto}
+ .cell{border-radius:3px}
+ .legend{font-size:.76rem;gap:8px 13px}
+ .rules{padding:13px 15px}
+}
+@media(max-width:380px){
+ .wrap{padding-inline:7px}
+ .brand{font-size:.92rem}
+ .offline{font-size:.67rem;padding:5px 8px}
+ .panel{padding:8px}
+ .mode-button{gap:4px}
+ .toolbar .mode-button{padding-inline:5px;font-size:.82rem}
+}
+
+</style></head><body><main class="wrap"><header class="top"><div class="brand">✦ <b>LIGHT UP</b></div><span class="offline">● OFFLINE READY</span></header><section class="hero"><div><div class="eyebrow">A logic puzzle</div><h1>Light Up</h1><p>Illuminate every open square. Keep bulbs from seeing each other.</p></div><div class="stats"><div class="stat"><small>Time</small><strong id="timer">00:00</strong></div><div class="stat"><small>Bulbs</small><strong id="bulb-count">0 / 0</strong></div></div></section><section class="panel"><div class="toolbar"><select id="size" aria-label="Board size"><option value="7">7 × 7</option><option value="10">10 × 10</option><option value="14">14 × 14</option></select><select id="difficulty" aria-label="Difficulty"><option>Easy</option><option>Normal</option><option>Hard</option></select><div class="mode-group" role="group" aria-label="Cell action"><button class="mode-button" type="button" data-mode="bulb" aria-pressed="true"><span class="mode-glyph">✦</span> Bulb</button><button class="mode-button" type="button" data-mode="mark" aria-pressed="false"><span class="mode-glyph">×</span> Mark</button><button class="mode-button" type="button" data-mode="erase" aria-pressed="false"><span class="mode-glyph">⌫</span> Erase</button></div><button class="primary" id="new">New puzzle</button><span class="spacer"></span><button id="undo">Undo</button><button id="check">Check</button></div><div class="zoom-row"><label for="zoom">Board zoom</label><input id="zoom" type="range" min="60" max="150" step="5" value="100"><output id="zoom-value">100%</output></div><div class="board-shell"><div id="board" class="board" role="grid" aria-label="Light Up puzzle"></div></div><div class="legend"><span><i class="dot lit"></i>Illuminated</span><span><i class="dot wall"></i>Numbered wall</span><span class="action-hint">Choose Bulb, Mark, or Erase, then tap or drag across squares.</span></div><div id="message" class="message" aria-live="polite"></div></section><details class="rules"><summary>How to play</summary><p><strong>Place bulbs</strong> so every white square is illuminated. A bulb shines along its row and column until a dark wall blocks it. <strong>Bulbs cannot shine on one another.</strong> A number on a wall tells you how many bulbs touch it edge-to-edge.</p><p>Choose Bulb, Mark (×), or Erase above. Tap or drag to apply that action to one or more squares. Use Undo to reverse your last tap or drag, and Check when you think you have solved it.</p></details><div class="foot">A self-contained game. No account, ads, or internet connection needed.</div></main><dialog id="win-dialog" class="win-dialog" aria-labelledby="win-title" aria-describedby="win-copy"><div class="win-card"><button class="win-close" id="win-dismiss" type="button" aria-label="Close">×</button><div class="win-badge" aria-hidden="true">✦</div><h2 id="win-title">All lit up!</h2><p id="win-copy">Good job. You solved the puzzle.</p><button class="win-action" id="win-continue" type="button">Continue</button></div></dialog>
 <script>
-(()=>{const $=s=>document.querySelector(s), boardEl=$('#board'), sizeEl=$('#size'),diffEl=$('#difficulty');let n=7,grid=[],state=[],history=[],seconds=0,tick=null,pressTimer=null,suppressClick=false,zoom=100,completed=false;const dirs=[[1,0],[-1,0],[0,1],[0,-1]];$('#win-dismiss').addEventListener('click',()=>$('#win-dialog').close());$('#win-continue').addEventListener('click',()=>$('#win-dialog').close());
+(()=>{const $=s=>document.querySelector(s), boardEl=$('#board'), sizeEl=$('#size'),diffEl=$('#difficulty');let n=7,grid=[],state=[],history=[],seconds=0,tick=null,zoom=100,completed=false,activeMode='bulb';const dirs=[[1,0],[-1,0],[0,1],[0,-1]];document.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{activeMode=button.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));$('#win-dismiss').addEventListener('click',()=>$('#win-dialog').close());$('#win-continue').addEventListener('click',()=>$('#win-dialog').close());
 // Count Akari solutions (up to two) with constraint propagation and backtracking.
 // Constraints model numbered walls, at most one bulb per visible line segment,
 // and at least one bulb in the row/column segments that light each white cell.
@@ -73,20 +165,21 @@ function makePuzzle(){completed=false;n=+sizeEl.value;const level=diffEl.value,w
 function illuminated(){const lit=Array.from({length:n},()=>Array(n).fill(false));for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(state[r][c]===1){lit[r][c]=true;for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){lit[rr][cc]=true;rr+=dr;cc+=dc}}}return lit}
 function conflict(r,c){for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){if(state[rr][cc]===1)return true;rr+=dr;cc+=dc}}return false}
 function render(){const lit=illuminated();boardEl.style.gridTemplateColumns=`repeat(${n},auto)`;applyZoom();boardEl.replaceChildren();let bulbs=0,total=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++){const v=grid[r][c],el=document.createElement('div');el.className='cell';el.dataset.r=r;el.dataset.c=c;el.setAttribute('role','gridcell');if(v>=0){el.classList.add('wall');if(v>0){el.classList.add('number');el.textContent=v-1;let adj=0,available=0;for(const[dr,dc]of dirs){const rr=r+dr,cc=c+dc;if(grid[rr]?.[cc]===-1){if(state[rr][cc]===1)adj++;else if(state[rr][cc]===0&&!lit[rr][cc])available++}}const target=v-1;el.classList.add(adj===target?'satisfied':'unsatisfied');if(adj>target||adj+available<target)el.classList.add('incorrect')}}else{total++;el.classList.add('white');if(lit[r][c])el.classList.add('lit');if(state[r][c]===1){bulbs++;el.classList.add('bulb');if(conflict(r,c))el.classList.add('conflict')}else if(state[r][c]===2)el.classList.add('marked');}boardEl.append(el)}$('#bulb-count').textContent=`${bulbs} / ${total}`;updateTimer()}
-function toggle(r,c,mark){history.push(state.map(row=>row.slice()));if(mark)state[r][c]=state[r][c]===2?0:2;else state[r][c]=state[r][c]===1?0:1;$('#message').textContent='';render()}
-let paint=null;
 function cellAtPoint(x,y){const el=document.elementFromPoint(x,y);return el?.closest('.cell.white')&&boardEl.contains(el)?el:null}
-function paintCell(el){if(!paint||!el)return;const key=el.dataset.r+','+el.dataset.c;if(paint.visited.has(key))return;paint.visited.add(key);const r=+el.dataset.r,c=+el.dataset.c;state[r][c]=(state[r][c]+1)%3;paint.changed=true;$('#message').textContent='';render()}
+function targetState(){return activeMode==='bulb'?1:activeMode==='mark'?2:0}
 function beginPaint(el,pointerId,mouseFallback=false){if(!el)return;const r=+el.dataset.r,c=+el.dataset.c;history.push(state.map(row=>row.slice()));paint={pointerId,startKey:r+','+c,startR:r,startC:c,visited:new Set(),changed:false,moved:false,mouseFallback}}
+let paint=null;
+function paintCell(el){if(!paint||!el)return;const key=el.dataset.r+','+el.dataset.c;if(paint.visited.has(key))return;paint.visited.add(key);const r=+el.dataset.r,c=+el.dataset.c,next=targetState();if(state[r][c]===next)return;state[r][c]=next;paint.changed=true;$('#message').textContent='';render()}
 function movePaint(x,y){if(!paint)return;const el=cellAtPoint(x,y);if(!el)return;const key=el.dataset.r+','+el.dataset.c;if(key===paint.startKey)return;paint.moved=true;paintCell(boardEl.querySelector('[data-r="'+paint.startR+'"][data-c="'+paint.startC+'"]'));paintCell(el)}
 boardEl.addEventListener('pointerdown',e=>{if(paint)return;const el=cellAtPoint(e.clientX,e.clientY);if(!el)return;e.preventDefault();beginPaint(el,e.pointerId);boardEl.setPointerCapture(e.pointerId)});
 boardEl.addEventListener('mousedown',e=>{if(paint)return;const el=cellAtPoint(e.clientX,e.clientY);if(!el)return;e.preventDefault();beginPaint(el,null,true)});
 boardEl.addEventListener('pointermove',e=>{if(paint&&!paint.mouseFallback&&paint.pointerId===e.pointerId)movePaint(e.clientX,e.clientY)});
 window.addEventListener('mousemove',e=>{if(paint?.mouseFallback)movePaint(e.clientX,e.clientY)});
-function finishPaint(){if(!paint)return;if(!paint.moved){const r=paint.startR,c=paint.startC;state[r][c]=(state[r][c]+1)%3;$('#message').textContent='';render()}else if(!paint.changed)history.pop();paint=null;check()}
+function isSolved(){const lit=illuminated();for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]===-1&&(!lit[r][c]||(state[r][c]===1&&conflict(r,c))))return false;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]>0){let adj=dirs.reduce((sum,[dr,dc])=>sum+((state[r+dr]?.[c+dc]===1)?1:0),0);if(adj!==grid[r][c]-1)return false}return true}
+function finishPaint(){if(!paint)return;const current=paint;if(!current.moved)paintCell(boardEl.querySelector('[data-r="'+current.startR+'"][data-c="'+current.startC+'"]'));paint=null;if(!current.changed)history.pop();if(isSolved())check();else $('#message').textContent=''}
 function endPaint(e){if(paint&&!paint.mouseFallback&&paint.pointerId===e.pointerId)finishPaint()}
 boardEl.addEventListener('pointerup',endPaint);boardEl.addEventListener('pointercancel',endPaint);window.addEventListener('mouseup',()=>{if(paint?.mouseFallback)finishPaint()});boardEl.addEventListener('contextmenu',e=>e.preventDefault());
-function applyZoom(){const max=window.innerWidth<560?48:62,available=Math.max(20,window.innerWidth-80),px=Math.max(20,Math.min(72,Math.min(max,available/n)*zoom/100));boardEl.style.setProperty('--cell-size',`${px}px`);$('#zoom-value').textContent=`${zoom}%`}
+function applyZoom(){const shell=boardEl.parentElement;const available=Math.max(1,shell.clientWidth-28),gap=3* (n-1)+8*2+12;const fit=(available-gap)/n;const max=window.innerWidth<560?48:62;const px=Math.max(16,Math.min(72,Math.min(max,fit)*zoom/100));boardEl.style.setProperty('--cell-size',px+'px');$('#zoom-value').textContent=zoom+'%'}
 function updateTimer(){$('#timer').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`}
 function check(){const lit=illuminated();let conflictFound=false,all=true;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]===-1){if(!lit[r][c])all=false;if(state[r][c]===1&&conflict(r,c))conflictFound=true}let clues=true;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(grid[r][c]>0){let adj=dirs.reduce((s,[dr,dc])=>s+((state[r+dr]?.[c+dc]===1)?1:0),0);if(adj!==grid[r][c]-1)clues=false}if(all&&!conflictFound&&clues){$('#message').textContent='All lit up! Good job!';clearInterval(tick);if(!completed){completed=true;$('#win-dialog').showModal()}}else if(conflictFound)$('#message').textContent='Two bulbs can see each other. Move one and try again.';else if(!all)$('#message').textContent='Some squares are still dark.';else $('#message').textContent='Check the numbered walls: each needs the right number of bulbs.'}
 $('#new').onclick=makePuzzle;$('#zoom').oninput=e=>{zoom=+e.target.value;applyZoom()};window.addEventListener('resize',applyZoom);$('#size').onchange=makePuzzle;$('#difficulty').onchange=makePuzzle;$('#check').onclick=check;$('#undo').onclick=()=>{if(history.length){state=history.pop();$('#message').textContent='';render()}};makePuzzle()})();
