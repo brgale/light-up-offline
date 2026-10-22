@@ -161,13 +161,14 @@ function solvePuzzle(puzzle,limit=2){
  search(Array(cells.length).fill(-1));return{count:searchAborted?limit:solutions.length,solutions:solutions.map(s=>cells.filter((_,i)=>s[i]===1).map(([r,c])=>r*n+c)),nodes:visitedNodes,aborted:searchAborted}
 }
 function makePuzzle(){completed=false;n=+sizeEl.value;if(n>=25){makeGiantPuzzle();return}
- const level=diffEl.value,spec={Easy:{walls:.33,hide:0},Medium:{walls:.30,hide:.18},Hard:{walls:.27,hide:.38}}[level]||{walls:.30,hide:.18},wallRate=spec.walls;let accepted=null;
+ const level=diffEl.value,spec={Easy:{walls:.33,hide:0},Medium:{walls:.30,hide:.18},Hard:{walls:.27,hide:.38}}[level]||{walls:.30,hide:.18},wallRate=spec.walls;let accepted=null,backup=null;
  const maxAttempts=220,shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
  for(let attempt=0;attempt<maxAttempts&&!accepted;attempt++){
   const candidate=Array.from({length:n},()=>Array.from({length:n},()=>Math.random()<wallRate?0:-1)),solution=new Set(),order=shuffle(Array.from({length:n*n},(_,i)=>i));
   const litBySolution=(r,c)=>{if(solution.has(r*n+c))return true;for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&candidate[rr][cc]===-1){if(solution.has(rr*n+cc))return true;rr+=dr;cc+=dc}}return false};
   for(const pos of order){const r=Math.floor(pos/n),c=pos%n;if(candidate[r][c]===-1&&!litBySolution(r,c))solution.add(pos)}
   for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(candidate[r][c]===0){let adjacent=0;for(const[dr,dc]of dirs){const rr=r+dr,cc=c+dc;if(rr>=0&&rr<n&&cc>=0&&cc<n&&solution.has(rr*n+cc))adjacent++}candidate[r][c]=adjacent+1}
+  if(!backup)backup={grid:candidate.map(row=>row.slice()),solution:new Set(solution)};
   let result=solvePuzzle(candidate,2);
   for(let refine=0;result.count>1&&refine<n*n;refine++){
    const alternate=new Set(result.solutions[1]),adjacentBulbs=(pos,bulbs)=>{const r=Math.floor(pos/n),c=pos%n;let total=0;for(const[dr,dc]of dirs){const rr=r+dr,cc=c+dc;if(rr>=0&&rr<n&&cc>=0&&cc<n&&bulbs.has(rr*n+cc))total++}return total};
@@ -188,12 +189,7 @@ function makePuzzle(){completed=false;n=+sizeEl.value;if(n>=25){makeGiantPuzzle(
    accepted={grid:candidate,solution}
   }
  }
- if(!accepted){
-  const candidate=Array.from({length:n},()=>Array(n).fill(0)),solution=new Set(),columns=shuffle(Array.from({length:n},(_,i)=>i));
-  for(let r=0;r<n;r++){const c=columns[r];candidate[r][c]=-1;solution.add(r*n+c)}
-  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(candidate[r][c]===0){let adjacent=0;for(const[dr,dc]of dirs){const rr=r+dr,cc=c+dc;if(rr>=0&&rr<n&&cc>=0&&cc<n&&solution.has(rr*n+cc))adjacent++}candidate[r][c]=adjacent+1}
-  accepted={grid:candidate,solution}
- }
+ if(!accepted)accepted=backup;
  grid=accepted.grid;state=Array.from({length:n},()=>Array(n).fill(0));history=[];seconds=0;clearInterval(tick);tick=setInterval(()=>{seconds++;updateTimer();if(seconds%5===0)saveProgress()},1000);$('#message').textContent='';render()}
 function illuminated(){const lit=Array.from({length:n},()=>Array(n).fill(false));for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(state[r][c]===1){lit[r][c]=true;for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){lit[rr][cc]=true;rr+=dr;cc+=dc}}}return lit}
 function conflict(r,c){for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<n&&cc>=0&&cc<n&&grid[rr][cc]===-1){if(state[rr][cc]===1)return true;rr+=dr;cc+=dc}}return false}
