@@ -1,4 +1,4 @@
-const CACHE_NAME = 'light-up-shell-v36';
+const CACHE_NAME = 'light-up-shell-v37';
 const APP_ROOT = new URL('./', self.registration.scope);
 const FILES = ['./', './index.html', './favicon.svg', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', event => {
